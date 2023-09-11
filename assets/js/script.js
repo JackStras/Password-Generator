@@ -4,13 +4,45 @@ var cap_alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
 var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 var special = [" ", "!", '"', "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "`", "{", "|", "}", "~", "\\"]
 var empty = []
+
 function merge(x) {
   for (var i = 0; i < x.length; i++) {
     empty.push(x[i])
   }
 }
-function generatePassword() {
 
+function generatePassword() {
+  var needs_lower = confirm("Does your password require lowercase letters?")
+  if (needs_lower == true) {
+    merge(alphabet)
+  }
+  var needs_upper = confirm("Does your password require uppercase letters?")
+  if (needs_upper == true) {
+    merge(cap_alphabet)
+  }
+  var needs_numbers = confirm("Does your password require numbers?")
+  if (needs_numbers == true) {
+    merge(numbers)
+  }
+  var needs_special = confirm("Does your password require special characters?")
+  if (needs_special == true) {
+    merge(needs_special)
+  }
+
+  if (needs_lower == false && needs_upper == false && needs_numbers == false && needs_special == false) {
+    alert("You must select at least one character type. Please try again.")
+    return
+  }
+
+  var pass_length = prompt("Please select a number between 8 and 128 for the length of your password.")
+  Number(pass_length)
+  if (isNaN(pass_length)) {
+    alert("Please only use numbers when selecting password length. Please try again.")
+    return
+  } else if (pass_length < 8 || pass_length > 128) {
+    alert("You must choose a number that is at least 8 and no more than 128. Please try again.")
+    return
+  }
 }
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
@@ -26,3 +58,9 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+
+
+
+// PERSONAL NOTE: SYNTAX FOR THE FOR LOOP RESPONSIBLE FOR RANDOMLY SELECTING CHARACTERS SHOULD BE (i = whatever.length; i > 0; i--)
+// PERSONAL NOTE: PLEASE DO NOT FORGET TO REMOVE PERSONAL NOTES BEFORE DEPLOYMENT
