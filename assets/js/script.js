@@ -3,15 +3,16 @@ var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
 var cap_alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 var special = [" ", "!", '"', "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "`", "{", "|", "}", "~", "\\"]
-var empty = []
+var selected = []
 
 function merge(x) {
   for (var i = 0; i < x.length; i++) {
-    empty.push(x[i])
+    selected.push(x[i])
   }
 }
 
 function generatePassword() {
+  selected.length = 0
   var needs_lower = confirm("Does your password require lowercase letters?")
   if (needs_lower == true) {
     merge(alphabet)
@@ -26,7 +27,7 @@ function generatePassword() {
   }
   var needs_special = confirm("Does your password require special characters?")
   if (needs_special == true) {
-    merge(needs_special)
+    merge(special)
   }
 
   if (needs_lower == false && needs_upper == false && needs_numbers == false && needs_special == false) {
@@ -43,6 +44,13 @@ function generatePassword() {
     alert("You must choose a number that is at least 8 and no more than 128. Please try again.")
     return
   }
+
+  var final = ""
+  for (i = pass_length; i > 0; i--) {
+    var current = selected[Math.floor(Math.random()*selected.length)]
+    final = final+ current
+  }
+  return final
 }
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
@@ -58,9 +66,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
-
-
-// PERSONAL NOTE: SYNTAX FOR THE FOR LOOP RESPONSIBLE FOR RANDOMLY SELECTING CHARACTERS SHOULD BE (i = whatever.length; i > 0; i--)
-// PERSONAL NOTE: PLEASE DO NOT FORGET TO REMOVE PERSONAL NOTES BEFORE DEPLOYMENT
